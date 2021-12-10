@@ -9,13 +9,10 @@ const boardObject = (() => {
     const resetButton = document.querySelector('.reset')
     const newPlayersButton = document.querySelector('.restart')
     
-    newPlayersButton.addEventListener('click', () => {
-        game.restart()
-    })
-    
     startButton.addEventListener('click', () => {
         game.addPlayer()
         game.reset()
+        
     })
 
     squareButtons.forEach((btn, index) => {
@@ -25,13 +22,20 @@ const boardObject = (() => {
             btn.style.pointerEvents = 'none'
             game.declareWinner = false
             game.winCheck()
+            game.declareTie()
             game.switchPlayers()
             game.turnDisplay()
         })
     })
 
     resetButton.addEventListener('click', () => {
+        board = []
         game.reset()
+    })
+
+    newPlayersButton.addEventListener('click', () => {
+        board = []
+        game.restart()
     })
     
     return {
@@ -45,6 +49,7 @@ const game = (() => {
     let playerTwo = {}
     let currentPlayer
     let declareWinner
+    let movesLeft = 9
     const turnDiv = document.querySelector('.turn')
     const formWrapper = document.querySelector('.form-wrapper')
 
@@ -82,21 +87,29 @@ const game = (() => {
                 turnDiv.innerText = `Congratulations ${game.currentPlayer.name}, you win!`
             } else {return}
         })
+        movesLeft--
+    }
+
+    function declareTie() {
+        if(movesLeft === 0 && declareWinner === false){
+            game.turnDiv.innerText = 'Tie game!'
+        }
     }
 
     function turnDisplay() {
         if(game.declareWinner === false){
             turnDiv.innerText = `${game.currentPlayer.name}, it's your turn!`
         }
-        
     }
+
     function reset() {
-        boardObject.board = []
+        console.log(boardObject.board)
         boardObject.squareButtons.forEach(btn => {
             btn.innerText = ''
             btn.style.pointerEvents = ''    
         })
         declareWinner = false
+        movesLeft = 9
         game.turnDiv.innerText = `${game.currentPlayer.name}, it's your turn!`    
     }
 
@@ -112,6 +125,7 @@ const game = (() => {
         declareWinner,
         switchPlayers,
         winCheck,
+        declareTie,
         turnDisplay,
         reset,
         restart,

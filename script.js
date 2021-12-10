@@ -27,7 +27,6 @@ const boardObject = (() => {
             game.winCheck()
             game.switchPlayers()
             game.turnDisplay()
-            
         })
     })
 
@@ -54,7 +53,6 @@ const game = (() => {
         playerTwo = playerFactory(form.playerTwo.value, 'O')
         currentPlayer = playerOne
         formWrapper.style.display = 'none'
-        
         return {currentPlayer}
     }
 
@@ -105,9 +103,6 @@ const game = (() => {
     function restart() {
         form.reset()
         formWrapper.style.display = ''
-        // called after restartButton event listener
-        // erase player names form.reset()
-        // erase gameboard object properties
     }
 
     return {

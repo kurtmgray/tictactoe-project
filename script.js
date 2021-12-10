@@ -12,7 +12,6 @@ const boardObject = (() => {
     startButton.addEventListener('click', () => {
         game.addPlayer()
         game.reset()
-        
     })
 
     squareButtons.forEach((btn, index) => {
